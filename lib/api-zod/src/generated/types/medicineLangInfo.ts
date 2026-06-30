@@ -6,6 +6,10 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface HealthStatus {
-  status: string;
+export interface MedicineLangInfo {
+  uses: string;
+  dosage: string;
+  sideEffects: string;
+  precautions: string;
+  disclaimer: string;
 }

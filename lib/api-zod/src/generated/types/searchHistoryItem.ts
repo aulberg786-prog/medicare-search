@@ -6,6 +6,9 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface HealthStatus {
-  status: string;
+export interface SearchHistoryItem {
+  id: number;
+  query: string;
+  medicineName: string;
+  searchedAt: Date;
 }

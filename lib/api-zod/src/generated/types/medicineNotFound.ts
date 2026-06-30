@@ -6,6 +6,9 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface HealthStatus {
-  status: string;
+export interface MedicineNotFound {
+  isMedicine: boolean;
+  errorMsg_EN: string;
+  errorMsg_RU: string;
+  errorMsg_UR: string;
 }
