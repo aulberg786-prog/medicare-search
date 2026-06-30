@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "MediCare Search"
+version = "1.0.0"
+id = "artifacts/medicare-search"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23713
+
+[services.development]
+run = "pnpm --filter @workspace/medicare-search run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/medicare-search", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/medicare-search/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23713"
+BASE_PATH = "/"
