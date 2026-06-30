@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "leXuiJw5_P0Q6Jkzfoy_-"
+uri = "file://medicare-search.tar.gz"
+type = "unspecified"
+title = "MediCare Search — Project Files"
