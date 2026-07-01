@@ -25,12 +25,58 @@ export interface MedicineLangInfo {
   disclaimer: string;
 }
 
+export interface GenericInfo {
+  /** The generic (non-brand) name of the medicine */
+  genericName: string;
+  /** Generic alternative info in English */
+  en: string;
+  /** Generic alternative info in Roman Urdu */
+  ru: string;
+  /** Generic alternative info in Urdu Script */
+  ur: string;
+}
+
+export interface NecessityNote {
+  /** Is this medicine commonly over-prescribed? (English) */
+  en: string;
+  /** Is this medicine commonly over-prescribed? (Roman Urdu) */
+  ru: string;
+  /** Is this medicine commonly over-prescribed? (Urdu Script) */
+  ur: string;
+}
+
+/**
+ * How commonly this medicine is counterfeited in Pakistan
+ */
+export type FakeMedicineWarningRiskLevel = typeof FakeMedicineWarningRiskLevel[keyof typeof FakeMedicineWarningRiskLevel];
+
+
+export const FakeMedicineWarningRiskLevel = {
+  low: 'low',
+  medium: 'medium',
+  high: 'high',
+} as const;
+
+export interface FakeMedicineWarning {
+  /** How commonly this medicine is counterfeited in Pakistan */
+  riskLevel: FakeMedicineWarningRiskLevel;
+  /** Fake medicine warning in English */
+  en: string;
+  /** Fake medicine warning in Roman Urdu */
+  ru: string;
+  /** Fake medicine warning in Urdu Script */
+  ur: string;
+}
+
 export interface MedicineResult {
   isMedicine: boolean;
   medicineName: string;
   english: MedicineLangInfo;
   romanUrdu: MedicineLangInfo;
   urduScript: MedicineLangInfo;
+  genericInfo: GenericInfo;
+  necessityNote: NecessityNote;
+  fakeMedicineWarning: FakeMedicineWarning;
 }
 
 export interface MedicineNotFound {

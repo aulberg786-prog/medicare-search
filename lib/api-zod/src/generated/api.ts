@@ -51,6 +51,23 @@ export const SearchMedicineResponse = zod.object({
   "sideEffects": zod.string(),
   "precautions": zod.string(),
   "disclaimer": zod.string()
+}),
+  "genericInfo": zod.object({
+  "genericName": zod.string().describe('The generic (non-brand) name of the medicine'),
+  "en": zod.string().describe('Generic alternative info in English'),
+  "ru": zod.string().describe('Generic alternative info in Roman Urdu'),
+  "ur": zod.string().describe('Generic alternative info in Urdu Script')
+}),
+  "necessityNote": zod.object({
+  "en": zod.string().describe('Is this medicine commonly over-prescribed? (English)'),
+  "ru": zod.string().describe('Is this medicine commonly over-prescribed? (Roman Urdu)'),
+  "ur": zod.string().describe('Is this medicine commonly over-prescribed? (Urdu Script)')
+}),
+  "fakeMedicineWarning": zod.object({
+  "riskLevel": zod.enum(['low', 'medium', 'high']).describe('How commonly this medicine is counterfeited in Pakistan'),
+  "en": zod.string().describe('Fake medicine warning in English'),
+  "ru": zod.string().describe('Fake medicine warning in Roman Urdu'),
+  "ur": zod.string().describe('Fake medicine warning in Urdu Script')
 })
 })
 

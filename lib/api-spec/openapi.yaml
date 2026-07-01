@@ -115,9 +115,58 @@ components:
         disclaimer:
           type: string
 
+    GenericInfo:
+      type: object
+      required: [genericName, en, ru, ur]
+      properties:
+        genericName:
+          type: string
+          description: The generic (non-brand) name of the medicine
+        en:
+          type: string
+          description: Generic alternative info in English
+        ru:
+          type: string
+          description: Generic alternative info in Roman Urdu
+        ur:
+          type: string
+          description: Generic alternative info in Urdu Script
+
+    NecessityNote:
+      type: object
+      required: [en, ru, ur]
+      properties:
+        en:
+          type: string
+          description: Is this medicine commonly over-prescribed? (English)
+        ru:
+          type: string
+          description: Is this medicine commonly over-prescribed? (Roman Urdu)
+        ur:
+          type: string
+          description: Is this medicine commonly over-prescribed? (Urdu Script)
+
+    FakeMedicineWarning:
+      type: object
+      required: [riskLevel, en, ru, ur]
+      properties:
+        riskLevel:
+          type: string
+          enum: [low, medium, high]
+          description: How commonly this medicine is counterfeited in Pakistan
+        en:
+          type: string
+          description: Fake medicine warning in English
+        ru:
+          type: string
+          description: Fake medicine warning in Roman Urdu
+        ur:
+          type: string
+          description: Fake medicine warning in Urdu Script
+
     MedicineResult:
       type: object
-      required: [isMedicine, medicineName, english, romanUrdu, urduScript]
+      required: [isMedicine, medicineName, english, romanUrdu, urduScript, genericInfo, necessityNote, fakeMedicineWarning]
       properties:
         isMedicine:
           type: boolean
@@ -129,6 +178,12 @@ components:
           $ref: "#/components/schemas/MedicineLangInfo"
         urduScript:
           $ref: "#/components/schemas/MedicineLangInfo"
+        genericInfo:
+          $ref: "#/components/schemas/GenericInfo"
+        necessityNote:
+          $ref: "#/components/schemas/NecessityNote"
+        fakeMedicineWarning:
+          $ref: "#/components/schemas/FakeMedicineWarning"
 
     MedicineNotFound:
       type: object

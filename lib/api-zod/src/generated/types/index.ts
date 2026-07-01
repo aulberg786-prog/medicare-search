@@ -7,10 +7,14 @@
  */
 
 export * from './errorResponse';
+export * from './fakeMedicineWarning';
+export * from './fakeMedicineWarningRiskLevel';
+export * from './genericInfo';
 export * from './getMedicineHistoryParams';
 export * from './healthStatus';
 export * from './medicineLangInfo';
 export * from './medicineNotFound';
 export * from './medicineResult';
 export * from './medicineSearchInput';
+export * from './necessityNote';
 export * from './searchHistoryItem';

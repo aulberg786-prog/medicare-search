@@ -5,7 +5,10 @@
  * MediCare Search API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { FakeMedicineWarning } from './fakeMedicineWarning';
+import type { GenericInfo } from './genericInfo';
 import type { MedicineLangInfo } from './medicineLangInfo';
+import type { NecessityNote } from './necessityNote';
 
 export interface MedicineResult {
   isMedicine: boolean;
@@ -13,4 +16,7 @@ export interface MedicineResult {
   english: MedicineLangInfo;
   romanUrdu: MedicineLangInfo;
   urduScript: MedicineLangInfo;
+  genericInfo: GenericInfo;
+  necessityNote: NecessityNote;
+  fakeMedicineWarning: FakeMedicineWarning;
 }

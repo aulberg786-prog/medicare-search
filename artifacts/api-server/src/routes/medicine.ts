@@ -5,9 +5,55 @@ import { desc } from "drizzle-orm";
 
 const router = Router();
 
-const SYSTEM_PROMPT = `You are a highly knowledgeable pharmacist. Provide accurate info about the medicine the user searches. You MUST return ONLY a valid JSON object with this exact structure:
-{ "isMedicine": true, "medicineName": "...", "english": { "uses": "...", "dosage": "...", "sideEffects": "...", "precautions": "...", "disclaimer": "..." }, "romanUrdu": { "uses": "...", "dosage": "...", "sideEffects": "...", "precautions": "...", "disclaimer": "..." }, "urduScript": { "uses": "...", "dosage": "...", "sideEffects": "...", "precautions": "...", "disclaimer": "..." } }.
-If the input is not a medicine, set isMedicine to false and return this: { "isMedicine": false, "errorMsg_EN": "Sorry, '{{query}}' is not a recognized medicine.", "errorMsg_RU": "Maaf kijiye, '{{query}}' koi dawai nahi hai.", "errorMsg_UR": "معاف کیجئے، '{{query}}' کوئی دوائی نہیں ہے۔" }`;
+const SYSTEM_PROMPT = `You are a knowledgeable Pakistani pharmacist and patient safety expert. When the user searches a medicine, return ONLY a valid JSON object with this EXACT structure:
+
+{
+  "isMedicine": true,
+  "medicineName": "Brand Name (Generic Name)",
+  "english": {
+    "uses": "...",
+    "dosage": "...",
+    "sideEffects": "...",
+    "precautions": "...",
+    "disclaimer": "..."
+  },
+  "romanUrdu": {
+    "uses": "...",
+    "dosage": "...",
+    "sideEffects": "...",
+    "precautions": "...",
+    "disclaimer": "..."
+  },
+  "urduScript": {
+    "uses": "...",
+    "dosage": "...",
+    "sideEffects": "...",
+    "precautions": "...",
+    "disclaimer": "..."
+  },
+  "genericInfo": {
+    "genericName": "The actual generic/chemical name (e.g. Paracetamol for Panadol)",
+    "en": "This medicine's brand name is [Brand]. The same medicine is available as [Generic] at much lower cost. Patients can ask their doctor or pharmacist for the generic version. Example cheaper brands: [list 2-3 cheaper alternatives available in Pakistan].",
+    "ru": "Is dawai ka brand naam [Brand] hai. Yehi dawai [Generic] ke naam se bahut sasti milti hai. Doctor ya pharmacist se generic maangein. Sasti alternatives: [list].",
+    "ur": "اس دوائی کا برانڈ نام [Brand] ہے۔ یہی دوائی [Generic] کے نام سے بہت سستی ملتی ہے۔ ڈاکٹر یا فارماسسٹ سے جنیرک مانگیں۔"
+  },
+  "necessityNote": {
+    "en": "Is this medicine commonly over-prescribed in Pakistan for commission? Give an honest, specific assessment. If yes, explain when it IS actually needed vs when it may be unnecessary. If no, confirm it is a standard necessary prescription.",
+    "ru": "Kya yeh dawai Pakistan mein commission ke liye zyada likhi jaati hai? Honest assessment dein.",
+    "ur": "کیا یہ دوائی پاکستان میں کمیشن کے لیے زیادہ لکھی جاتی ہے؟ ایمانداری سے بتائیں۔"
+  },
+  "fakeMedicineWarning": {
+    "riskLevel": "low|medium|high",
+    "en": "Is this medicine commonly counterfeited/fake in Pakistan? riskLevel: low=rarely fake, medium=sometimes fake, high=very commonly fake. Give specific tips to identify genuine medicine (check packaging, hologram, batch number, buy from registered pharmacy, etc).",
+    "ru": "Kya yeh dawai Pakistan mein nakli milti hai? Asli pehchanne ke tarike batayein.",
+    "ur": "کیا یہ دوائی پاکستان میں جعلی ملتی ہے؟ اصلی پہچاننے کے طریقے بتائیں۔"
+  }
+}
+
+If the input is NOT a medicine, return:
+{ "isMedicine": false, "errorMsg_EN": "Sorry, '{{query}}' is not a recognized medicine.", "errorMsg_RU": "Maaf kijiye, '{{query}}' koi dawai nahi hai.", "errorMsg_UR": "معاف کیجئے، '{{query}}' کوئی دوائی نہیں ہے۔" }
+
+IMPORTANT: Return ONLY the JSON object. No markdown, no explanation, no code blocks.`;
 
 // POST /api/medicine/search
 router.post("/search", async (req, res) => {
@@ -41,7 +87,6 @@ router.post("/search", async (req, res) => {
     );
 
     if (!response.ok) {
-      const errText = await response.text();
       req.log.error({ status: response.status }, "Gemini API error");
       res.status(502).json({ error: "AI service unavailable. Please try again." });
       return;
@@ -94,7 +139,7 @@ router.post("/search", async (req, res) => {
     res.json(parsed);
   } catch (err) {
     req.log.error({ err }, "Medicine search error");
-    res.status(500).json({ error: String(err) });
+    res.status(500).json({ error: "An unexpected error occurred." });
   }
 });
 
