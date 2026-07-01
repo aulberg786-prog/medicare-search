@@ -1,0 +1,9 @@
+{
+  "buildCommand": "pnpm --filter @workspace/medicare-search run build",
+  "outputDirectory": "artifacts/medicare-search/dist/public",
+  "installCommand": "pnpm install",
+  "framework": null,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
