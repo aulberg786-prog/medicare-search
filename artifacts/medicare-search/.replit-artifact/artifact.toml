@@ -1,8 +1,8 @@
 kind = "web"
 previewPath = "/"
-title = "MediCare Search"
+title = "medicen care Search"
 version = "1.0.0"
-id = "artifacts/medicare-search"
+id = "artifacts/medicen care-search"
 router = "path"
 
 [[services]]
@@ -11,12 +11,12 @@ paths = [ "/" ]
 localPort = 23713
 
 [services.development]
-run = "pnpm --filter @workspace/medicare-search run dev"
+run = "pnpm --filter @workspace/medicen care-search run dev"
 
 [services.production]
-build = [ "pnpm", "--filter", "@workspace/medicare-search", "run", "build" ]
+build = [ "pnpm", "--filter", "@workspace/medicen care-search", "run", "build" ]
 serve = "static"
-publicDir = "artifacts/medicare-search/dist/public"
+publicDir = "artifacts/medicen care-search/dist/public"
 
 [[services.production.rewrites]]
 from = "/*"

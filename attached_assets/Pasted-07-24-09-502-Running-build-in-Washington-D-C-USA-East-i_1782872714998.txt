@@ -60,7 +60,7 @@
 07:24:29.151 
 07:24:30.568 Scope: 4 of 9 workspace projects
 07:24:30.575 artifacts/api-server typecheck$ tsc -p tsconfig.json --noEmit
-07:24:30.576 artifacts/medicare-search typecheck$ tsc -p tsconfig.json --noEmit
+07:24:30.576 artifacts/medicen care-search typecheck$ tsc -p tsconfig.json --noEmit
 07:24:34.126 artifacts/api-server typecheck: src/routes/health.ts(2,37): error TS6305: Output file '/vercel/path1/lib/api-zod/dist/index.d.ts' has not been built from source file '/vercel/path1/lib/api-zod/src/index.ts'.
 07:24:34.130 artifacts/api-server typecheck: src/routes/medicine.ts(2,20): error TS6305: Output file '/vercel/path1/lib/db/dist/index.d.ts' has not been built from source file '/vercel/path1/lib/db/src/index.ts'.
 07:24:34.131 artifacts/api-server typecheck: src/routes/medicine.ts(3,38): error TS6305: Output file '/vercel/path1/lib/db/dist/index.d.ts' has not been built from source file '/vercel/path1/lib/db/src/index.ts'.

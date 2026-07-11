@@ -3,12 +3,12 @@ generated = []
 
 [[outputs]]
 id = "leXuiJw5_P0Q6Jkzfoy_-"
-uri = "file://medicare-search.tar.gz"
+uri = "file://medicen care-search.tar.gz"
 type = "unspecified"
-title = "MediCare Search — Project Files"
+title = "medicen care Search — Project Files"
 
 [[outputs]]
 id = "pjoZ1pUxR4JA13nLRI_Bk"
-uri = "file://medicare-search-source.tar.gz"
+uri = "file://medicen care-search-source.tar.gz"
 type = "unspecified"
-title = "MediCare Search — Updated Source (374 KB)"
+title = "medicen care Search — Updated Source (374 KB)"

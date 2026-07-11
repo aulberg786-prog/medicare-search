@@ -1,11 +1,11 @@
-# MediCare Search
+# medicen care Search
 
 A medicine information app for Pakistani families — search any medicine name and get uses, dosage, side effects, and precautions in English, Roman Urdu, or Urdu Script. Connected to Firebase Firestore and powered by Gemini AI.
 
 ## Run & Operate
 
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 8080)
-- `pnpm --filter @workspace/medicare-search run dev` — run the frontend (port 23713)
+- `pnpm --filter @workspace/medicen care-search run dev` — run the frontend (port 23713)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
@@ -17,7 +17,7 @@ A medicine information app for Pakistani families — search any medicine name a
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- Frontend: React + Vite (artifacts/medicare-search)
+- Frontend: React + Vite (artifacts/medicen care-search)
 - API: Express 5 (artifacts/api-server)
 - DB: PostgreSQL + Drizzle ORM (medicine_history table)
 - AI: Google Gemini 2.5 Flash via direct REST API
@@ -31,9 +31,9 @@ A medicine information app for Pakistani families — search any medicine name a
 - `lib/api-spec/openapi.yaml` — API contract (source of truth)
 - `lib/db/src/schema/medicine_history.ts` — DB schema for search history
 - `artifacts/api-server/src/routes/medicine.ts` — medicine search route (Gemini + DB)
-- `artifacts/medicare-search/src/pages/home.tsx` — main page orchestration
-- `artifacts/medicare-search/src/components/` — header, search-hero, medicine-result, recent-searches
-- `artifacts/medicare-search/src/lib/firebase.ts` — Firebase initialization (guarded against missing config)
+- `artifacts/medicen care-search/src/pages/home.tsx` — main page orchestration
+- `artifacts/medicen care-search/src/components/` — header, search-hero, medicine-result, recent-searches
+- `artifacts/medicen care-search/src/lib/firebase.ts` — Firebase initialization (guarded against missing config)
 
 ## Architecture decisions
 

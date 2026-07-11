@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediCare Search</title>
+    <title>medicen care Search</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -13,7 +13,7 @@
         <div class="max-w-4xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <h1 class="text-2xl font-bold text-blue-600 flex items-center gap-2">
                 <i data-lucide="pill" class="h-6 w-6"></i>
-                MediCare Search
+                medicen care Search
             </h1>
             
             <div class="flex bg-slate-100 p-1 rounded-lg" id="langButtons">
