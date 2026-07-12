@@ -3,6 +3,15 @@
   "outputDirectory": "artifacts/medicare-search/dist/public",
   "installCommand": "pnpm install",
   "framework": null,
+  "build": {
+    "env": {
+      "VITE_FIREBASE_AUTH_DOMAIN": "school-c9633.firebaseapp.com",
+      "VITE_FIREBASE_PROJECT_ID": "school-c9633",
+      "VITE_FIREBASE_STORAGE_BUCKET": "school-c9633.firebasestorage.app",
+      "VITE_FIREBASE_MESSAGING_SENDER_ID": "293275030223",
+      "VITE_FIREBASE_APP_ID": "1:293275030223:web:3336fc0091baeb88019dba"
+    }
+  },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
