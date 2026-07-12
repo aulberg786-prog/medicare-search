@@ -5,47 +5,44 @@ import { defineConfig } from 'vite';
 
 import runtimeErrorOverlay from '@replit/vite-plugin-runtime-error-modal';
 
+const isReplit = process.env.REPL_ID !== undefined;
+const isBuild = process.env.NODE_ENV === 'production' || process.argv.includes('build');
+
+// PORT is only required for dev server, not for production build
 const rawPort = process.env.PORT;
+const port = rawPort ? Number(rawPort) : 3000;
 
-if (!rawPort) {
-  throw new Error(
-    'PORT environment variable is required but was not provided.',
-  );
+// BASE_PATH defaults to '/' when not set (e.g. on Vercel)
+const basePath = process.env.BASE_PATH ?? '/';
+
+const replitPlugins = [];
+
+if (!isBuild && isReplit) {
+  try {
+    const { cartographer } = await import('@replit/vite-plugin-cartographer');
+    replitPlugins.push(
+      cartographer({ root: path.resolve(import.meta.dirname, '..') })
+    );
+  } catch {}
+
+  try {
+    const { devBanner } = await import('@replit/vite-plugin-dev-banner');
+    replitPlugins.push(devBanner());
+  } catch {}
 }
 
-const port = Number(rawPort);
-
-if (Number.isNaN(port) || port <= 0) {
-  throw new Error(`Invalid PORT value: "${rawPort}"`);
-}
-
-const basePath = process.env.BASE_PATH;
-
-if (!basePath) {
-  throw new Error(
-    'BASE_PATH environment variable is required but was not provided.',
-  );
-}
+const runtimeErrorPlugin = [];
+try {
+  runtimeErrorPlugin.push(runtimeErrorOverlay());
+} catch {}
 
 export default defineConfig({
   base: basePath,
   plugins: [
     react(),
     tailwindcss(),
-    runtimeErrorOverlay(),
-    ...(process.env.NODE_ENV !== 'production' &&
-    process.env.REPL_ID !== undefined
-      ? [
-          await import('@replit/vite-plugin-cartographer').then((m) =>
-            m.cartographer({
-              root: path.resolve(import.meta.dirname, '..'),
-            }),
-          ),
-          await import('@replit/vite-plugin-dev-banner').then((m) =>
-            m.devBanner(),
-          ),
-        ]
-      : []),
+    ...runtimeErrorPlugin,
+    ...replitPlugins,
   ],
   resolve: {
     alias: {
