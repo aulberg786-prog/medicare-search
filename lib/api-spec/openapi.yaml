@@ -3,15 +3,13 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: medicen care Search API specification
+  description: API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
-  - name: medicine
-    description: Medicine search operations
 paths:
   /healthz:
     get:
@@ -26,61 +24,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
-
-  /medicine/search:
-    post:
-      operationId: searchMedicine
-      tags: [medicine]
-      summary: Search medicine information
-      description: Search for medicine information using AI (returns info in 3 languages)
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/MedicineSearchInput"
-      responses:
-        "200":
-          description: Medicine information found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/MedicineResult"
-        "404":
-          description: Medicine not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/MedicineNotFound"
-        "500":
-          description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-  /medicine/history:
-    get:
-      operationId: getMedicineHistory
-      tags: [medicine]
-      summary: Get recent search history
-      description: Returns list of recently searched medicines
-      parameters:
-        - name: limit
-          in: query
-          schema:
-            type: integer
-            default: 10
-      responses:
-        "200":
-          description: Search history
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/SearchHistoryItem"
-
 components:
   schemas:
     HealthStatus:
@@ -91,130 +34,3 @@ components:
       required:
         - status
 
-    MedicineSearchInput:
-      type: object
-      required: [query]
-      properties:
-        query:
-          type: string
-          minLength: 1
-          description: Medicine name to search for
-
-    MedicineLangInfo:
-      type: object
-      required: [uses, dosage, sideEffects, precautions, disclaimer]
-      properties:
-        uses:
-          type: string
-        dosage:
-          type: string
-        sideEffects:
-          type: string
-        precautions:
-          type: string
-        disclaimer:
-          type: string
-
-    GenericInfo:
-      type: object
-      required: [genericName, en, ru, ur]
-      properties:
-        genericName:
-          type: string
-          description: The generic (non-brand) name of the medicine
-        en:
-          type: string
-          description: Generic alternative info in English
-        ru:
-          type: string
-          description: Generic alternative info in Roman Urdu
-        ur:
-          type: string
-          description: Generic alternative info in Urdu Script
-
-    NecessityNote:
-      type: object
-      required: [en, ru, ur]
-      properties:
-        en:
-          type: string
-          description: Is this medicine commonly over-prescribed? (English)
-        ru:
-          type: string
-          description: Is this medicine commonly over-prescribed? (Roman Urdu)
-        ur:
-          type: string
-          description: Is this medicine commonly over-prescribed? (Urdu Script)
-
-    FakeMedicineWarning:
-      type: object
-      required: [riskLevel, en, ru, ur]
-      properties:
-        riskLevel:
-          type: string
-          enum: [low, medium, high]
-          description: How commonly this medicine is counterfeited in Pakistan
-        en:
-          type: string
-          description: Fake medicine warning in English
-        ru:
-          type: string
-          description: Fake medicine warning in Roman Urdu
-        ur:
-          type: string
-          description: Fake medicine warning in Urdu Script
-
-    MedicineResult:
-      type: object
-      required: [isMedicine, medicineName, english, romanUrdu, urduScript, genericInfo, necessityNote, fakeMedicineWarning]
-      properties:
-        isMedicine:
-          type: boolean
-        medicineName:
-          type: string
-        english:
-          $ref: "#/components/schemas/MedicineLangInfo"
-        romanUrdu:
-          $ref: "#/components/schemas/MedicineLangInfo"
-        urduScript:
-          $ref: "#/components/schemas/MedicineLangInfo"
-        genericInfo:
-          $ref: "#/components/schemas/GenericInfo"
-        necessityNote:
-          $ref: "#/components/schemas/NecessityNote"
-        fakeMedicineWarning:
-          $ref: "#/components/schemas/FakeMedicineWarning"
-
-    MedicineNotFound:
-      type: object
-      required: [isMedicine, errorMsg_EN, errorMsg_RU, errorMsg_UR]
-      properties:
-        isMedicine:
-          type: boolean
-        errorMsg_EN:
-          type: string
-        errorMsg_RU:
-          type: string
-        errorMsg_UR:
-          type: string
-
-    ErrorResponse:
-      type: object
-      required: [error]
-      properties:
-        error:
-          type: string
-
-    SearchHistoryItem:
-      type: object
-      required: [id, query, medicineName, searchedAt]
-      properties:
-        id:
-          type: integer
-        query:
-          type: string
-        medicineName:
-          type: string
-        searchedAt:
-          type: string
-          format: date-time
